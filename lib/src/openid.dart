@@ -108,7 +108,7 @@ class Issuer {
   static Iterable<Uri> get knownIssuers => _discoveries.keys;
 
   /// Discovers the OpenId Provider's metadata based on its uri.
-  static Future<Issuer> discover(Uri uri) async {
+  static Future<Issuer> discover(Uri uri, [extraHeaders]) async {
     if (_discoveries[uri] != null) return _discoveries[uri];
 
     var segments = uri.pathSegments.toList();
@@ -118,7 +118,7 @@ class Issuer {
     segments.addAll([".well-known", "openid-configuration"]);
     uri = uri.replace(pathSegments: segments);
 
-    var json = await http.get(uri);
+    var json = await http.get(uri, headers: extraHeaders);
     return _discoveries[uri] =
         new Issuer(new OpenIdProviderMetadata.fromJson(json));
   }
