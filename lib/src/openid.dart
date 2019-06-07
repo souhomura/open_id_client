@@ -323,7 +323,8 @@ class Flow {
         "client_id": client.clientId,
         "client_secret": client.clientSecret
       });
-    } else if (methods != null && methods.contains("client_secret_basic")) {
+    } else if ((methods != null && methods.contains("client_secret_basic")) ||
+        ((client.clientSecret != null && client.clientSecret.isNotEmpty) && (client.clientId != null && client.clientId.isNotEmpty))){
       var h =
       base64.encode("${client.clientId}:${client.clientSecret}".codeUnits);
       json = await http.post(client.issuer.metadata.tokenEndpoint, headers: {
