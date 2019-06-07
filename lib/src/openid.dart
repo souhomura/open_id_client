@@ -188,7 +188,8 @@ class Credential {
       var json = await http.post(client.issuer.metadata.tokenEndpoint, body: {
         "grant_type": "refresh_token",
         "refresh_token": _token.refreshToken,
-        "client_id": client.clientId,
+        "client_id": client.clientId,,
+        "client_secret": client.clientSecret
       });
       if (json["error"] != null) {
         throw new Exception(json["error_description"]);
