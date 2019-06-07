@@ -314,11 +314,7 @@ class Flow {
       });
     } else if ((client.clientSecret != null && client.clientSecret.isNotEmpty) ||
         (methods != null && methods.contains("client_secret_post"))) {
-      var h =
-      base64.encode("${client.clientId}:${client.clientSecret}".codeUnits);
-
       json = await http.post(client.issuer.metadata.tokenEndpoint, headers: {
-          "authorization": "Basic $h",
           "Content-Type": "application/x-www-form-urlencoded",
         }, body: {
         "grant_type": "authorization_code",
