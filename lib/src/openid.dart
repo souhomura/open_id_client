@@ -312,7 +312,7 @@ class Flow {
         "client_id": client.clientId,
         "code_verifier": _proofKeyForCodeExchange["code_verifier"]
       });
-    } else if ((client.clientSecret != null && client.clientSecret.isNotEmpty) ||
+    } else if (
         (methods != null && methods.contains("client_secret_post"))) {
       json = await http.post(client.issuer.metadata.tokenEndpoint, headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -327,7 +327,8 @@ class Flow {
       var h =
       base64.encode("${client.clientId}:${client.clientSecret}".codeUnits);
       json = await http.post(client.issuer.metadata.tokenEndpoint, headers: {
-        "authorization": "Basic $h"
+        "authorization": "Basic $h",
+        "Content-Type": "application/x-www-form-urlencoded",
       }, body: {
         "grant_type": "authorization_code",
         "code": code,
